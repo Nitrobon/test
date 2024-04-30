@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  fpm:
+    build:
+      dockerfile: Dockerfile
+      context: ../businessProcess/docker/fpm
+      args:
+        UID: $UID
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    volumes:
+      - ./:/code/
+  nginx:
+    build:
+      dockerfile: Dockerfile
+      context: ../businessProcess/docker/nginx
+      args:
+        UID: $UID
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/code
